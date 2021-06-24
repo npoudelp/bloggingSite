@@ -7,9 +7,9 @@ const Post = require("../models/postModel");
 router.get("/", async (req, res) => {
   try {
     const postData = await Post.find();
-    res.send(postData);
+    res.json(postData);
   } catch (error) {
-    res.send("Error in post page " + error);
+    res.json("Error in post page " + error);
   }
 });
 
@@ -23,19 +23,28 @@ router.post("/", async (req, res) => {
   });
   try {
     const savePost = await postData.save();
-    res.send(savePost);
+    res.json(title + " saved sucessfully....");
   } catch (error) {
-    res.send("Error posting post " + error);
+    res.json("Error posting post " + error);
   }
 });
 
-router.delete("/:id", async (req, res)=> {
-    try {
-        const postData = await Post.findByIdAndDelete({_id: req.params.id});
-        res.send("Post Deleted Sucessfully");
-    } catch (error) {
-        res.send("Error deleting post "+ error);
-    }
-})
+router.delete("/:id", async (req, res) => {
+  try {
+    const postData = await Post.findByIdAndDelete({ _id: req.params.id });
+    res.json(postData.title + " Deleted Sucessfully");
+  } catch (error) {
+    res.json("Error deleting post " + error);
+  }
+});
+
+router.put("/:id", async (req, res) => {
+  try {
+    await Post.findByIdAndUpdate({ _id: req.params.id },req.body);
+    res.json("Post Updated Sucessfully");
+  } catch (error) {
+      res.json("Error updating post: "+error);
+  }
+});
 
 module.exports = router;
