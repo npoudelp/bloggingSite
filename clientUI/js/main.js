@@ -44,7 +44,7 @@ function readMore(postId) {
     contentType: "application/json",
     success: (data) => {
       console.log(data);  
-      //from here send data to post for individual post    
+      //from here send data to post for individual post.html    
     },
   });
 }
