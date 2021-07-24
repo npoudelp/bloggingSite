@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
   });
   try {
     const saveContact = await contactData.save();
-    res.json(contactData.title + " saved sucessfully....");
+    res.json(saveContact.title + " saved sucessfully....");
   } catch (error) {
     res.json("Error posting post " + error);
   }
