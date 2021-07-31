@@ -6,33 +6,21 @@ $(document).ready(() => {
     dataType: "json",
     contentType: "application/json",
     success: (data) => {
-      console.log(data);
-      $.each(data, (i) => {
-        $($postCount).text(i + 1);
+      $(data).each((i, data) => {
+        console.log(i, data);
+        authorRender(i, data);
+        postTitleRender(i, data);
       });
     },
   });
 
-  $.ajax({
-    type: "GET",
-    url: "http://127.0.0.1:8090/post",
-    dataType: "json",
-    contentType: "application/json",
-    success: (data) => {
-      authorRender(data);
-    },
-  });
+  let $authorHolder = $("#authorHolder");
+  function authorRender(i, data){
+    ($authorHolder).prepend("<p>"+data.author+"</p><hr>");
+  }
 
-  let $postTitleHolder = $("#postTitleHolder");
-
-  function authorRender(param) {
-    $.each(param, (i, posts) => {
-      let $post = posts.title;
-      console.log($post);
-      let $latest = param.length;
-        if(i > param.length - 4){
-          $($postTitleHolder).append("<p class='h5'>" + $post + "</p>");
-        }
-    });
+  let $latestPostHolder = $("#latestPostHolder");
+  function postTitleRender(i, data){
+    ($latestPostHolder).prepend("<p>"+data.title+"</p><hr>");
   }
 });
